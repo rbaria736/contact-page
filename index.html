@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Links</title>
+    <title>RN Studio - Social Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Added fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Added particles.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -12,14 +18,28 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Poppins', sans-serif;
             color: white;
             min-height: 100vh;
             padding: 20px;
+            position: relative;
+            background: #0f0c29;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         .container {
+            position: relative;
+            z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -31,14 +51,12 @@
             padding: 20px 0;
         }
 
-        /* Tablet View */
         @media (min-width: 768px) {
             .cards-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* Desktop View */
         @media (min-width: 1024px) {
             .cards-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -47,55 +65,50 @@
 
         .card {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             background: rgba(255, 255, 255, 0.15);
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .card:hover::before {
-            left: 100%;
-        }
-
         .profile-img {
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s ease;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease;
         }
 
         .card:hover .profile-img {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
         }
 
         .info {
@@ -103,32 +116,39 @@
         }
 
         .name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .platform {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         .link {
-            color: #ffdd57;
+            color: white;
             text-decoration: none;
-            font-weight: bold;
-            padding: 8px 15px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+            padding: 12px 25px;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .link:hover {
-            background: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.4);
         }
 
         .external-icon {
@@ -138,34 +158,361 @@
 
         #status {
             text-align: center;
-            padding: 15px;
+            padding: 20px;
             margin: 20px auto;
             max-width: 400px;
-            border-radius: 10px;
+            border-radius: 15px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .error {
-            background: rgba(255, 59, 48, 0.2) !important;
+            background: rgba(239, 68, 68, 0.2) !important;
         }
+        /* Previous styles remain same until body */
+        .header {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .company-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .book-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-select option {
+            background: #24243e;
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+        }
+
+        /* Add previous styles here */
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
+    
+    <!-- New Header Section -->
+    <header class="header">
+        <img src="LOGO_URL_HERE" alt="RN Studio Logo" class="logo">
+        <h1 class="company-name">RN Studio</h1>
+        <button class="book-btn" onclick="openModal()">Book Now</button>
+    </header>
+
+    <!-- Booking Form Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="margin-bottom: 20px; font-size: 1.8rem; text-align: center;">Register for Services</h2>
+            <form id="bookingForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-input" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Service Type</label>
+                    <select class="form-select" name="service" required>
+                        <option value="">Select a service</option>
+                        <option value="wedding">Wedding Photography</option>
+                        <option value="pre-wedding">Pre-Wedding Shoot</option>
+                        <option value="event">Event Photography</option>
+                        <option value="portrait">Portrait Session</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Preferred Date</label>
+                    <input type="date" class="form-input" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-input" name="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Previous container content -->
     <div class="container">
-        <div id="status">Loading data...</div>
+        <div id="status">
+            <div class="loading-spinner"></div>
+            Loading your social links...
+        </div>
         <div id="content" class="cards-grid"></div>
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
+        // Previous particles.js and data loading code here
+<div id="particles-js"></div>
+    <div class="container">
+        <div id="status">
+            <div class="loading-spinner"></div>
+            Loading your social links...
+        </div>
+        <div id="content" class="cards-grid"></div>
+    </div>
+
+    <script>
+        // Particles.js configuration
+        particlesJS("particles-js", {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#ffffff"
+                },
+                shape: {
+                    type: "circle"
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+        // Modal Functions
+        function openModal() {
+            document.getElementById('bookingModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('bookingModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Form submission
+        async function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                // Replace this URL with your form handling endpoint
+                const response = await fetch('YOUR_FORM_HANDLING_ENDPOINT', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ...data,
+                        recipientEmail: 'rbaria736@gmail.com'
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Booking submitted successfully!');
+                    form.reset();
+                    closeModal();
+                } else {
+                    throw new Error('Failed to submit booking');
+                }
+            } catch (error) {
+                alert('Error submitting booking. Please try again.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Previous code here
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
 
         function updateStatus(message, isError = false) {
             const status = document.getElementById('status');
@@ -174,10 +521,15 @@
         }
 
         function displayData(data) {
+            if (!data || data.length === 0) {
+                updateStatus('No data found', true);
+                return;
+            }
+
             const content = document.getElementById('content');
-            content.innerHTML = data.map(item => `
-                <div class="card">
-                    ${item.profilepic ? `<img src="${item.profilepic}" alt="${item.name}" class="profile-img">` : ''}
+            content.innerHTML = data.map((item, index) => `
+                <div class="card" style="animation-delay: ${index * 0.1}s">
+                    ${item.profilepic ? `<img src="${item.profilepic}" alt="${item.name}" class="profile-img" onerror="this.src='https://via.placeholder.com/90'">` : ''}
                     <div class="info">
                         <div class="name">${item.name || 'No Name'}</div>
                         <div class="platform">${item.platform || 'No Platform'}</div>
@@ -201,9 +553,17 @@
             try {
                 updateStatus('Fetching your social links...');
                 const response = await fetch(SCRIPT_URL);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
-                if (!Array.isArray(data)) throw new Error('Invalid data format received');
+                
+                if (!Array.isArray(data)) {
+                    throw new Error('Invalid data format received');
+                }
+                
                 displayData(data);
             } catch (error) {
                 console.error('Error:', error);
