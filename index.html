@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RN Studio - Social Links</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>Social Links</title>
     <!-- Added fonts for modern typography -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Added particles.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         * {
@@ -188,6 +188,7 @@
         .error {
             background: rgba(239, 68, 68, 0.2) !important;
         }
+
         /* Previous styles remain same until body */
         .header {
             position: relative;
@@ -330,7 +331,7 @@
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+<div id="particles-js"></div>
     
     <!-- New Header Section -->
     <header class="header">
@@ -380,7 +381,7 @@
         </div>
     </div>
 
-    <!-- Previous container content -->
+    <div id="particles-js"></div>
     <div class="container">
         <div id="status">
             <div class="loading-spinner"></div>
@@ -388,18 +389,59 @@
         </div>
         <div id="content" class="cards-grid"></div>
     </div>
-
-    <script>
+<script>
         // Previous particles.js and data loading code here
-<div id="particles-js"></div>
-    <div class="container">
-        <div id="status">
-            <div class="loading-spinner"></div>
-            Loading your social links...
-        </div>
-        <div id="content" class="cards-grid"></div>
-    </div>
 
+        // Modal Functions
+        function openModal() {
+            document.getElementById('bookingModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('bookingModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Form submission
+        async function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                // Replace this URL with your form handling endpoint
+                const response = await fetch('YOUR_FORM_HANDLING_ENDPOINT', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ...data,
+                        recipientEmail: 'rbaria736@gmail.com'
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Booking submitted successfully!');
+                    form.reset();
+                    closeModal();
+                } else {
+                    throw new Error('Failed to submit booking');
+                }
+            } catch (error) {
+                alert('Error submitting booking. Please try again.');
+                console.error('Error:', error);
+            }
     <script>
         // Particles.js configuration
         particlesJS("particles-js", {
@@ -458,61 +500,8 @@
             },
             retina_detect: true
         });
-        // Modal Functions
-        function openModal() {
-            document.getElementById('bookingModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
 
-        function closeModal() {
-            document.getElementById('bookingModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal if clicked outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('bookingModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        // Form submission
-        async function submitForm(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
-            
-            try {
-                // Replace this URL with your form handling endpoint
-                const response = await fetch('YOUR_FORM_HANDLING_ENDPOINT', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ...data,
-                        recipientEmail: 'rbaria736@gmail.com'
-                    })
-                });
-
-                if (response.ok) {
-                    alert('Booking submitted successfully!');
-                    form.reset();
-                    closeModal();
-                } else {
-                    throw new Error('Failed to submit booking');
-                }
-            } catch (error) {
-                alert('Error submitting booking. Please try again.');
-                console.error('Error:', error);
-            }
-        }
-
-        // Previous code here
-
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
 
         function updateStatus(message, isError = false) {
             const status = document.getElementById('status');
