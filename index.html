@@ -1,45 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Webpage</title>
+    <title>Sheet Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+        .profile-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .info {
+            flex-grow: 1;
+        }
+        .name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        .platform {
+            color: #ddd;
+        }
+        .link {
+            color: #ffdd57;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        #status {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div id="status">Loading data...</div>
+        <div id="content"></div>
+    </div><script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
 
-    <h1>My Social Links</h1>
-    <ul id="links"></ul>
+    function updateStatus(message) {
+        document.getElementById('status').textContent = message;
+    }
 
-    <script>
-        // Google Sheets JSON API URL (Yahan apna URL paste karein)
-        const apiUrl = "https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec";
+    function displayData(data) {
+        const content = document.getElementById('content');
+        content.innerHTML = data.map(item => `
+            <div class="card">
+                ${item.profilepic ? `<img src="${item.profilepic}" alt="${item.name}" class="profile-img">` : ''}
+                <div class="info">
+                    <div class="name">${item.name || 'No Name'}</div>
+                    <div class="platform">${item.platform || 'No Platform'}</div>
+                </div>
+                ${item.url ? `<a href="${item.url}" target="_blank" class="link">Visit Profile</a>` : ''}
+            </div>
+        `).join('');
+        document.getElementById('status').style.display = 'none';
+    }
 
-        // Data Fetching Function
-        async function fetchData() {
-            try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
-                
-                let linksList = document.getElementById("links");
-                linksList.innerHTML = "";
-
-                data.forEach(item => {
-                    let li = document.createElement("li");
-                    let a = document.createElement("a");
-                    a.href = item.url;
-                    a.textContent = item.name;
-                    a.target = "_blank";
-                    li.appendChild(a);
-                    linksList.appendChild(li);
-                });
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
+    async function loadData() {
+        try {
+            updateStatus('Fetching data...');
+            const response = await fetch(SCRIPT_URL);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+            if (!Array.isArray(data)) throw new Error('Invalid data format received');
+            displayData(data);
+        } catch (error) {
+            console.error('Error:', error);
+            updateStatus(`Error: ${error.message}.`, true);
         }
+    }
 
-        // Call Function
-        fetchData();
-    </script>
+    window.onload = loadData;
+</script>
 
 </body>
 </html>
