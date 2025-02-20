@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Webpage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .data-box {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .data-box:last-child {
+            border-bottom: none;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <i class="fas fa-database"></i> Dynamic Webpage with Google Sheets
+    </header>
+    <div class="container" id="data-container">
+        <p>Loading data...</p>
+    </div>
+    <footer>
+        <p>&copy; 2025 Rakesh Baria | <i class="fas fa-link"></i> <a href="#" style="color: white; text-decoration: none;">Visit My GitHub</a></p>
+    </footer><script>
+    fetch("https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec")
+        .then(response => response.json())
+        .then(data => {
+            let container = document.getElementById("data-container");
+            container.innerHTML = "";
+            data.forEach(item => {
+                let div = document.createElement("div");
+                div.className = "data-box";
+                div.innerHTML = `<strong>${item.title}</strong><br>${item.description}`;
+                container.appendChild(div);
+            });
+        })
+        .catch(error => {
+            document.getElementById("data-container").innerHTML = "<p style='color: red;'>Failed to load data!</p>";
+            console.error("Error fetching data:", error);
+        });
+</script>
+
+</body>
+</html>
