@@ -1,115 +1,217 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sheet Data</title>
+    <title>Social Links</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 20px;
         }
+
         .container {
-            max-width: 600px;
-            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        /* Tablet View */
+        @media (min-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Desktop View */
+        @media (min-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         .card {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             gap: 15px;
-            backdrop-filter: blur(10px);
-            color: white;
+            position: relative;
+            overflow: hidden;
         }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
         .profile-img {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid white;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
         }
+
+        .card:hover .profile-img {
+            transform: scale(1.1);
+        }
+
         .info {
             flex-grow: 1;
         }
+
         .name {
+            font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 5px;
-            font-size: 18px;
         }
+
         .platform {
-            color: #ddd;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
         }
+
         .link {
             color: #ffdd57;
             text-decoration: none;
             font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
+
         .link:hover {
-            text-decoration: underline;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
         }
+
+        .external-icon {
+            width: 16px;
+            height: 16px;
+        }
+
         #status {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
             text-align: center;
-            font-size: 18px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 400px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .error {
+            background: rgba(255, 59, 48, 0.2) !important;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div id="status">Loading data...</div>
-        <div id="content"></div>
-    </div><script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
+        <div id="content" class="cards-grid"></div>
+    </div>
 
-    function updateStatus(message) {
-        document.getElementById('status').textContent = message;
-    }
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
 
-    function displayData(data) {
-        const content = document.getElementById('content');
-        content.innerHTML = data.map(item => `
-            <div class="card">
-                ${item.profilepic ? `<img src="${item.profilepic}" alt="${item.name}" class="profile-img">` : ''}
-                <div class="info">
-                    <div class="name">${item.name || 'No Name'}</div>
-                    <div class="platform">${item.platform || 'No Platform'}</div>
-                </div>
-                ${item.url ? `<a href="${item.url}" target="_blank" class="link">Visit Profile</a>` : ''}
-            </div>
-        `).join('');
-        document.getElementById('status').style.display = 'none';
-    }
-
-    async function loadData() {
-        try {
-            updateStatus('Fetching data...');
-            const response = await fetch(SCRIPT_URL);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const data = await response.json();
-            if (!Array.isArray(data)) throw new Error('Invalid data format received');
-            displayData(data);
-        } catch (error) {
-            console.error('Error:', error);
-            updateStatus(`Error: ${error.message}.`, true);
+        function updateStatus(message, isError = false) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = isError ? 'error' : '';
         }
-    }
 
-    window.onload = loadData;
-</script>
+        function displayData(data) {
+            const content = document.getElementById('content');
+            content.innerHTML = data.map(item => `
+                <div class="card">
+                    ${item.profilepic ? `<img src="${item.profilepic}" alt="${item.name}" class="profile-img">` : ''}
+                    <div class="info">
+                        <div class="name">${item.name || 'No Name'}</div>
+                        <div class="platform">${item.platform || 'No Platform'}</div>
+                    </div>
+                    ${item.url ? `
+                        <a href="${item.url}" target="_blank" class="link">
+                            Visit
+                            <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    ` : ''}
+                </div>
+            `).join('');
+            document.getElementById('status').style.display = 'none';
+        }
 
+        async function loadData() {
+            try {
+                updateStatus('Fetching your social links...');
+                const response = await fetch(SCRIPT_URL);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                if (!Array.isArray(data)) throw new Error('Invalid data format received');
+                displayData(data);
+            } catch (error) {
+                console.error('Error:', error);
+                updateStatus(`Failed to load data: ${error.message}`, true);
+            }
+        }
+
+        window.onload = loadData;
+    </script>
 </body>
 </html>
