@@ -461,34 +461,58 @@ async function submitForm(event) {
             status.className = isError ? 'error' : '';
         }
 
-        function displayData(data) {
-            if (!data || data.length === 0) {
-                updateStatus('No data found', true);
-                return;
-            }
+        // Helper function to convert Google Drive URL to direct image URL
+function getGoogleDriveImageUrl(url) {
+    // Extract file ID from Google Drive URL
+    const fileId = url.match(/\/d\/(.*?)\/view/)?.[1] || url;
+    return `https://drive.google.com/uc?export=view&id=${fileId}`;
+}
 
-            const content = document.getElementById('content');
-            content.innerHTML = data.map((item, index) => `
-                <div class="card" style="animation-delay: ${index * 0.1}s">
-                    ${item.profilepic ? `<img src="${item.profilepic}" alt="${item.name}" class="profile-img" onerror="this.src='https://via.placeholder.com/90'">` : ''}
-                    <div class="info">
-                        <div class="name">${item.name || 'No Name'}</div>
-                        <div class="platform">${item.platform || 'No Platform'}</div>
-                    </div>
-                    ${item.url ? `
-                        <a href="${item.url}" target="_blank" class="link">
-                            Visit
-                            <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                <polyline points="15 3 21 3 21 9"></polyline>
-                                <line x1="10" y1="14" x2="21" y2="3"></line>
-                            </svg>
-                        </a>
-                    ` : ''}
+// Updated displayData function to handle Google Drive images
+function displayData(data) {
+    if (!data || data.length === 0) {
+        updateStatus('No data found', true);
+        return;
+    }
+
+    const content = document.getElementById('content');
+    content.innerHTML = data.map((item, index) => {
+        // Convert Google Drive URL to direct image URL if needed
+        const imageUrl = item.profilepic && item.profilepic.includes('drive.google.com') 
+            ? getGoogleDriveImageUrl(item.profilepic)
+            : item.profilepic;
+
+        return `
+            <div class="card" style="animation-delay: ${index * 0.1}s">
+                ${imageUrl ? `
+                    <img 
+                        src="${imageUrl}" 
+                        alt="${item.name}" 
+                        class="profile-img" 
+                        onerror="this.src='https://via.placeholder.com/90'"
+                        loading="lazy"
+                    >` : ''
+                }
+                <div class="info">
+                    <div class="name">${item.name || 'No Name'}</div>
+                    <div class="platform">${item.platform || 'No Platform'}</div>
                 </div>
-            `).join('');
-            document.getElementById('status').style.display = 'none';
-        }
+                ${item.url ? `
+                    <a href="${item.url}" target="_blank" class="link">
+                        Visit
+                        <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                ` : ''}
+            </div>
+        `;
+    }).join('');
+    
+    document.getElementById('status').style.display = 'none';
+}
 
         async function loadData() {
             try {
