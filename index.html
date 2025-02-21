@@ -406,37 +406,55 @@
         }
 
         // Form Submission
-        async function submitForm(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
-            
-            try {
-                // Replace with your form handling endpoint
-                const response = await fetch('https://script.google.com/macros/s/AKfycbyrO8Q9FAgHFT5PvchEaF0ezb5lp8XcMWo_kvyx7pGxveXQt0gZ7zyJJgmY6IuXjBO8/exec', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ...data,
-                        recipientEmail: 'rbaria736@gmail.com'
-                    })
-                });
+        // In your form submission function, make sure you're getting all required fields
+async function submitForm(event) {
+  event.preventDefault();
+  const form = event.target;
+  const formData = new FormData(form);
+  
+  // Add phone field if it's missing
+  if (!formData.get('phone')) {
+    alert('Please enter your phone number');
+    return;
+  }
+  
+  // Add service type if it's missing
+  if (!formData.get('service')) {
+    alert('Please select a service type');
+    return;
+  }
 
-                if (response.ok) {
-                    alert('Booking submitted successfully!');
-                    form.reset();
-                    closeModal();
-                } else {
-                    throw new Error('Failed to submit booking');
-                }
-            } catch (error) {
-                alert('Error submitting booking. Please try again.');
-                console.error('Error:', error);
-            }
-        }
+  const data = Object.fromEntries(formData);
+
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbzJd_ybJkwXJkJOYAYmHRMZdwtSVICdij7oFFt8l4tJkTqZ94nNLwDAUzojWBl9Tsl3/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+        recipientEmail: 'rbaria736@gmail.com'
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    if (result.status === 'success') {
+      alert('Booking submitted successfully!');
+      form.reset();
+      closeModal();
+    } else {
+      throw new Error(result.message || 'Submission failed');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error submitting booking. Please try again.');
+  }
+}
 
         // Social Links Data Loading
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrO8Q9FAgHFT5PvchEaF0ezb5lp8XcMWo_kvyx7pGxveXQt0gZ7zyJJgmY6IuXjBO8/exec';
