@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Links</title>
-    <!-- Added fonts for modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Added particles.js library -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>RN Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         * {
@@ -21,11 +17,9 @@
             font-family: 'Poppins', sans-serif;
             color: white;
             min-height: 100vh;
-            padding: 20px;
             position: relative;
-            background: #0f0c29;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: #0f0c29;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
         }
 
         #particles-js {
@@ -37,9 +31,60 @@
             z-index: 1;
         }
 
-        .container {
+        .main-container {
             position: relative;
             z-index: 2;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            object-fit: cover;
+        }
+
+        .company-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .book-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+        }
+
+        /* Social Links Grid */
+        .container {
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -80,23 +125,6 @@
             animation-fill-mode: both;
         }
 
-        @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
         .profile-img {
             width: 90px;
             height: 90px;
@@ -122,7 +150,6 @@
             background: linear-gradient(to right, #fff, #a5b4fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .platform {
@@ -151,11 +178,7 @@
             box-shadow: 0 6px 20px rgba(99,102,241,0.4);
         }
 
-        .external-icon {
-            width: 16px;
-            height: 16px;
-        }
-
+        /* Loading Status */
         #status {
             text-align: center;
             padding: 20px;
@@ -168,8 +191,6 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
         .loading-spinner {
@@ -181,61 +202,7 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .error {
-            background: rgba(239, 68, 68, 0.2) !important;
-        }
-
-        /* Previous styles remain same until body */
-        .header {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .company-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .book-btn {
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: white;
-            background: linear-gradient(45deg, #6366f1, #8b5cf6);
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            margin-top: 20px;
-        }
-
-        .book-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99,102,241,0.4);
-        }
-
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -279,22 +246,7 @@
             font-weight: 500;
         }
 
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #6366f1;
-        }
-
-        .form-select {
+        .form-input, .form-select {
             width: 100%;
             padding: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -327,70 +279,113 @@
             box-shadow: 0 6px 20px rgba(99,102,241,0.4);
         }
 
-        /* Add previous styles here */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-<div id="particles-js"></div>
-    
-    <!-- New Header Section -->
-    <header class="header">
-        <img src="LOGO_URL_HERE" alt="RN Studio Logo" class="logo">
-        <h1 class="company-name">RN Studio</h1>
-        <button class="book-btn" onclick="openModal()">Book Now</button>
-    </header>
-
-    <!-- Booking Form Modal -->
-    <div id="bookingModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 style="margin-bottom: 20px; font-size: 1.8rem; text-align: center;">Register for Services</h2>
-            <form id="bookingForm" onsubmit="submitForm(event)">
-                <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-input" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Phone</label>
-                    <input type="tel" class="form-input" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Service Type</label>
-                    <select class="form-select" name="service" required>
-                        <option value="">Select a service</option>
-                        <option value="wedding">Wedding Photography</option>
-                        <option value="pre-wedding">Pre-Wedding Shoot</option>
-                        <option value="event">Event Photography</option>
-                        <option value="portrait">Portrait Session</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Preferred Date</label>
-                    <input type="date" class="form-input" name="date" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Message</label>
-                    <textarea class="form-input" name="message" rows="4"></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Submit Booking</button>
-            </form>
-        </div>
-    </div>
-
     <div id="particles-js"></div>
-    <div class="container">
-        <div id="status">
-            <div class="loading-spinner"></div>
-            Loading your social links...
+    <div class="main-container">
+        <!-- Header Section -->
+        <header class="header">
+            <img src="LOGO_URL_HERE" alt="RN Studio Logo" class="logo">
+            <h1 class="company-name">RN Studio</h1>
+            <button class="book-btn" onclick="openModal()">Book Now</button>
+        </header>
+
+        <!-- Booking Form Modal -->
+        <div id="bookingModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h2 style="margin-bottom: 20px; font-size: 1.8rem; text-align: center;">Register for Services</h2>
+                <form id="bookingForm" onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Service Type</label>
+                        <select class="form-select" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="wedding">Wedding Photography</option>
+                            <option value="pre-wedding">Pre-Wedding Shoot</option>
+                            <option value="event">Event Photography</option>
+                            <option value="portrait">Portrait Session</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Preferred Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-input" name="message" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Booking</button>
+                </form>
+            </div>
         </div>
-        <div id="content" class="cards-grid"></div>
+
+        <!-- Social Links Section -->
+        <div class="container">
+            <div id="status">
+                <div class="loading-spinner"></div>
+                Loading your social links...
+            </div>
+            <div id="content" class="cards-grid"></div>
+        </div>
     </div>
-<script>
-        // Previous particles.js and data loading code here
+
+    <script>
+        // Particles.js Configuration
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
 
         // Modal Functions
         function openModal() {
@@ -403,7 +398,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Close modal if clicked outside
         window.onclick = function(event) {
             const modal = document.getElementById('bookingModal');
             if (event.target == modal) {
@@ -411,7 +405,7 @@
             }
         }
 
-        // Form submission
+        // Form Submission
         async function submitForm(event) {
             event.preventDefault();
             const form = event.target;
@@ -419,7 +413,7 @@
             const data = Object.fromEntries(formData);
             
             try {
-                // Replace this URL with your form handling endpoint
+                // Replace with your form handling endpoint
                 const response = await fetch('YOUR_FORM_HANDLING_ENDPOINT', {
                     method: 'POST',
                     headers: {
@@ -442,65 +436,9 @@
                 alert('Error submitting booking. Please try again.');
                 console.error('Error:', error);
             }
-    <script>
-        // Particles.js configuration
-        particlesJS("particles-js", {
-            particles: {
-                number: {
-                    value: 80,
-                    density: {
-                        enable: true,
-                        value_area: 800
-                    }
-                },
-                color: {
-                    value: "#ffffff"
-                },
-                shape: {
-                    type: "circle"
-                },
-                opacity: {
-                    value: 0.5,
-                    random: false
-                },
-                size: {
-                    value: 3,
-                    random: true
-                },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#ffffff",
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: false,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: {
-                        enable: true,
-                        mode: "repulse"
-                    },
-                    onclick: {
-                        enable: true,
-                        mode: "push"
-                    },
-                    resize: true
-                }
-            },
-            retina_detect: true
-        });
+        }
 
+        // Social Links Data Loading
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi9Kza7Y9We8KRIPXF-3WguelRwlNjeruZp-vNUKJ5TkF9nVAJy_jwIS1QMuD6vFeYMg/exec';
 
         function updateStatus(message, isError = false) {
