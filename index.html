@@ -406,58 +406,54 @@
         }
 
         // Form Submission
-        // In your form submission function, make sure you're getting all required fields
+        // Form Submission Function
 async function submitForm(event) {
   event.preventDefault();
   const form = event.target;
   const formData = new FormData(form);
   
-  // Add phone field if it's missing
-  if (!formData.get('phone')) {
-    alert('Please enter your phone number');
-    return;
-  }
-  
-  // Add service type if it's missing
-  if (!formData.get('service')) {
-    alert('Please select a service type');
-    return;
-  }
-
-  const data = Object.fromEntries(formData);
+  // Add loading state
+  const submitBtn = form.querySelector('.submit-btn');
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.textContent = 'Submitting...';
+  submitBtn.disabled = true;
 
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbw4z7R4EIvUTpdcbAwqLsG5Jrr08NK-Vm2RF9EEcuycG7HmcGRBYH0uW5nAZVPqEUri/exec', {
+    // Convert form data to URL encoded string
+    const data = Array.from(formData.entries())
+      .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+      .join('&');
+
+    // Add recipient email
+    const fullData = data + '&recipientEmail=rbaria736@gmail.com';
+
+    const response = await fetch('https://script.google.com/macros/s/AKfycbyoBuR0kxyZhrVYSnhdyDEZE3o9BgjQysiDc83uLtdCozjzc_pfpj1N4a00Tdee7U5y/exec', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({
-        ...data,
-        recipientEmail: 'rbaria736@gmail.com'
-      })
+      body: fullData,
+      mode: 'no-cors' // Add this to handle CORS
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    // Since we're using no-cors, we can't access the response
+    // So we'll assume success if no error was thrown
+    alert('Booking submitted successfully!');
+    form.reset();
+    closeModal();
 
-    const result = await response.json();
-    if (result.status === 'success') {
-      alert('Booking submitted successfully!');
-      form.reset();
-      closeModal();
-    } else {
-      throw new Error(result.message || 'Submission failed');
-    }
   } catch (error) {
     console.error('Error:', error);
     alert('Error submitting booking. Please try again.');
+  } finally {
+    // Reset button state
+    submitBtn.textContent = originalBtnText;
+    submitBtn.disabled = false;
   }
 }
 
         // Social Links Data Loading
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4z7R4EIvUTpdcbAwqLsG5Jrr08NK-Vm2RF9EEcuycG7HmcGRBYH0uW5nAZVPqEUri/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyoBuR0kxyZhrVYSnhdyDEZE3o9BgjQysiDc83uLtdCozjzc_pfpj1N4a00Tdee7U5y/exec';
 
         function updateStatus(message, isError = false) {
             const status = document.getElementById('status');
